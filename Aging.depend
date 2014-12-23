@@ -1,0 +1,118 @@
+# depslib dependency file v1.0
+1419316290 source:/home/wuxuef/myproject/Aging/AAM_Basic.cpp
+	"AAM_Basic.h"
+
+1362019184 /home/wuxuef/myproject/Aging/AAM_Basic.h
+	"AAM_Util.h"
+	"AAM_TDM.h"
+	"AAM_CAM.h"
+
+1419316647 /home/wuxuef/myproject/Aging/AAM_Util.h
+	<vector>
+	<string>
+	<iostream>
+	<fstream>
+	<windows.h>
+	<stdio.h>
+	<tchar.h>
+	<direct.h>
+	<io.h>
+	<stdarg.h>
+	<sys/stat.h>
+	<unistd.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<opencv2/core/core.hpp>
+	<opencv2/imgproc/imgproc.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<opencv/cvaux.h>
+
+1362836894 /home/wuxuef/myproject/Aging/AAM_TDM.h
+	"AAM_Util.h"
+	"AAM_Shape.h"
+	"AAM_PAW.h"
+
+1365526634 /home/wuxuef/myproject/Aging/AAM_Shape.h
+	"AAM_Util.h"
+
+1419314513 /home/wuxuef/myproject/Aging/AAM_PAW.h
+	"AAM_Util.h"
+	"AAM_Shape.h"
+
+1419314486 /home/wuxuef/myproject/Aging/AAM_CAM.h
+	"AAM_TDM.h"
+	"AAM_PDM.h"
+	<windows.h>
+	<stdio.h>
+	<tchar.h>
+	<unistd.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+
+1365574036 /home/wuxuef/myproject/Aging/AAM_PDM.h
+	"AAM_Util.h"
+	"AAM_Shape.h"
+
+1367822020 source:/home/wuxuef/myproject/Aging/AAM_CAM.cpp
+	"AAM_CAM.h"
+
+1419316483 source:/home/wuxuef/myproject/Aging/AAM_IC.cpp
+	"AAM_IC.h"
+
+1419316339 /home/wuxuef/myproject/Aging/AAM_IC.h
+	"AAM_Util.h"
+	"AAM_Shape.h"
+	"AAM_PDM.h"
+	"AAM_TDM.h"
+	"AAM_PAW.h"
+
+1419316516 source:/home/wuxuef/myproject/Aging/AAM_PAW.cpp
+	<set>
+	<cstdio>
+	"AAM_PAW.h"
+	"AAM_TDM.h"
+
+1364371734 source:/home/wuxuef/myproject/Aging/AAM_PDM.cpp
+	"AAM_PDM.h"
+
+1365576822 source:/home/wuxuef/myproject/Aging/AAM_Shape.cpp
+	<string>
+	<iostream>
+	<fstream>
+	"AAM_Shape.h"
+
+1419316685 source:/home/wuxuef/myproject/Aging/AAM_TDM.cpp
+	"AAM_TDM.h"
+	"AAM_PAW.h"
+
+1419318841 source:/home/wuxuef/myproject/Aging/AAM_Util.cpp
+	"AAM_Util.h"
+	<dirent.h>
+	<sys/types.h>
+	<sys/stat.h>
+
+1418298126 source:/home/wuxuef/myproject/Aging/AAM_VJFaceDetect.cpp
+	"AAM_VJFaceDetect.h"
+
+1361880676 /home/wuxuef/myproject/Aging/AAM_VJFaceDetect.h
+	"AAM_Shape.h"
+
+1419318928 source:/home/wuxuef/myproject/Aging/FacePredict.cpp
+	"FacePredict.h"
+
+1366361694 /home/wuxuef/myproject/Aging/FacePredict.h
+	"AAM_Util.h"
+	"AAM_PDM.h"
+	"AAM_TDM.h"
+
+1419319670 source:/home/wuxuef/myproject/Aging/fit.cpp
+	<cstdio>
+	<string>
+	<opencv/highgui.h>
+	"AAM_IC.h"
+	"AAM_Basic.h"
+	"AAM_VJFaceDetect.h"
+	"FacePredict.h"
+
