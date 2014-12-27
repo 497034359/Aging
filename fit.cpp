@@ -26,6 +26,7 @@ std::string resultDir = "./trainingSets/";
 std::string trainDir = "./trainingSets/";
 //std::string resultDir = "../test2/";
 
+
 static void usage()
 {
 	printf("AAMFitting int string int int\n"
@@ -38,146 +39,156 @@ static void usage()
 	exit(0);
 }
 
-int main()
+extern "C"
 {
+    const char* fit(char* originalImageFileName, char* curAge, char* predictAge)
+    {
 
-	std::string originalImageFileName = "input.jpg";
-	std::string curAge = "1";
-	std::string predictAge = "3";
-	//load image
-	IplImage* originalImage = cvLoadImage(originalImageFileName.c_str(), 1);
-	if(originalImage==0){
-		fprintf(stderr, "ERROR(%s, %d): Cannot open image file %s!\n",
-			__FILE__, __LINE__, originalImageFileName.c_str());
-		exit(0);
-	}
-
+        //load image
+        IplImage* originalImage = cvLoadImage(originalImageFileName, 1);
+        if(originalImage==0){
+            fprintf(stderr, "ERROR(%s, %d): Cannot open image file %s!\n",
+                __FILE__, __LINE__, originalImageFileName);
+            exit(0);
+        }
 
 
-	IplImage *image = cvCreateImage(cvGetSize(originalImage), originalImage->depth, originalImage->nChannels);
-	cvCopy(originalImage, image);
-	AAM_Shape Shape;
-	/*AAM_Shape ShapeF;
-	AAM_Shape ShapeM;*/
 
-	//if (atoi(argv[1]) == 0) {
-		//search shape by aam
-	AAM * aam = NULL;
-	int type;
-	std::string aamFileName = resultDir + "Group" + /*std::string(argv[3])*/curAge + ".aam_ic";
-	std::ifstream fs(aamFileName.c_str());
-	if(fs == 0) {
-		//fprintf(stderr, "ERROR(%s: %d): Cannot open file %s!\n", __FILE__, __LINE__, resultDir+"Group"+ /*std::string(argv[3])*/curAge +".aam_ic");
-		printf("error");
-		exit(0);
-	}
-	fs >> type;
+        IplImage *image = cvCreateImage(cvGetSize(originalImage), originalImage->depth, originalImage->nChannels);
+        cvCopy(originalImage, image);
+        AAM_Shape Shape;
+        /*AAM_Shape ShapeF;
+        AAM_Shape ShapeM;*/
 
-	//aam-basic
-	if(type == 0)		aam = new AAM_Basic;
-	else if(type == 1)  aam = new AAM_IC;
+        //if (atoi(argv[1]) == 0) {
+            //search shape by aam
+        AAM * aam = NULL;
+        int type;
+        std::string aamFileName = resultDir + "Group" + /*std::string(argv[3])*/curAge + ".aam_ic";
+        std::ifstream fs(aamFileName.c_str());
+        if(fs == 0) {
+            //fprintf(stderr, "ERROR(%s: %d): Cannot open file %s!\n", __FILE__, __LINE__, resultDir+"Group"+ /*std::string(argv[3])*/curAge +".aam_ic");
+            printf("error");
+            exit(0);
+        }
+        fs >> type;
 
-	//read model from file
-	aam->Read(fs);
-	fs.close();
+        //aam-basic
+        if(type == 0)		aam = new AAM_Basic;
+        else if(type == 1)  aam = new AAM_IC;
 
-	//intial face detector
-	AAM_VJFaceDetect fjdetect;
-	fjdetect.LoadCascade("haarcascade_frontalface_alt2.xml");
+        //read model from file
+        aam->Read(fs);
+        fs.close();
 
-	//detect face for intialization
-  	Shape = fjdetect.Detect(image, aam->GetMeanShape());
+        //intial face detector
+        AAM_VJFaceDetect fjdetect;
+        fjdetect.LoadCascade("haarcascade_frontalface_alt2.xml");
 
-	//do image alignment
-	aam->Fit(image, Shape, 30, false);  //if true, show process
+        //detect face for intialization
+        Shape = fjdetect.Detect(image, aam->GetMeanShape());
 
-	ofstream outfile;
-	string wuxuefTmpResultDir = resultDir + "aam_result.txt";
-	outfile.open(wuxuefTmpResultDir.c_str());
-	Shape.Write( outfile );
-	outfile.close();
+        //do image alignment
+        aam->Fit(image, Shape, 30, false);  //if true, show process
 
-	//show GUI
-	cvNamedWindow("AAMFitting", CV_WINDOW_AUTOSIZE);
-	aam->Draw(image, 0);
-	cvShowImage("AAMFitting", image);
-	cvWaitKey(0);
-	//}
+        ofstream outfile;
+        string wuxuefTmpResultDir = resultDir + "aam_result.txt";
+        outfile.open(wuxuefTmpResultDir.c_str());
+        Shape.Write( outfile );
+        outfile.close();
 
-	/*
-	else {
-		//read shape from file
-		std::string filename = std::string(argv[2]);
-		filename = filename.substr(0, filename.length()-3) + "pts";
-		Shape.ReadPTS(filename);
+        //show GUI
+        cvNamedWindow("AAMFitting", CV_WINDOW_AUTOSIZE);
+        aam->Draw(image, 0);
+        cvShowImage("AAMFitting", image);
+        cvWaitKey(0);
+        //}
 
-		if (argc == 9) {
-			//read father's shape
-			std::string filenameF = std::string(argv[5]);
-			filenameF = filenameF.substr(0, filenameF.length()-3) + "pts";
-			ShapeF.ReadPTS(filenameF);
+        /*
+        else {
+            //read shape from file
+            std::string filename = std::string(argv[2]);
+            filename = filename.substr(0, filename.length()-3) + "pts";
+            Shape.ReadPTS(filename);
 
-			//read mother's shape
-			std::string filenameM = std::string(argv[7]);
-			filenameM = filenameM.substr(0, filenameM.length()-3) + "pts";
-			ShapeM.ReadPTS(filenameM);
-		}
-	}*/
+            if (argc == 9) {
+                //read father's shape
+                std::string filenameF = std::string(argv[5]);
+                filenameF = filenameF.substr(0, filenameF.length()-3) + "pts";
+                ShapeF.ReadPTS(filenameF);
 
-	//resize the current image
-	cvSetImageROI(originalImage, cvRect(Shape.MinX(), Shape.MinY(), Shape.GetWidth(), Shape.GetHeight()));
-	IplImage *facialImage = cvCreateImage(cvGetSize(originalImage), originalImage->depth, originalImage->nChannels);
-	cvCopy(originalImage, facialImage, NULL);
-	cvResetImageROI(originalImage);
+                //read mother's shape
+                std::string filenameM = std::string(argv[7]);
+                filenameM = filenameM.substr(0, filenameM.length()-3) + "pts";
+                ShapeM.ReadPTS(filenameM);
+            }
+        }*/
 
-	CvSize stdsize;
-	stdsize.width = stdwidth;
-	stdsize.height = stdwidth / facialImage->width * facialImage->height;
-	IplImage *stdImage = cvCreateImage(stdsize, originalImage->depth, originalImage->nChannels);
-	cvResize(facialImage, stdImage, CV_INTER_LINEAR);
+        //resize the current image
+        cvSetImageROI(originalImage, cvRect(Shape.MinX(), Shape.MinY(), Shape.GetWidth(), Shape.GetHeight()));
+        IplImage *facialImage = cvCreateImage(cvGetSize(originalImage), originalImage->depth, originalImage->nChannels);
+        cvCopy(originalImage, facialImage, NULL);
+        cvResetImageROI(originalImage);
 
-	cvNamedWindow("CurrentFacialImage");
-	cvShowImage("CurrentFacialImage", stdImage);
+        CvSize stdsize;
+        stdsize.width = stdwidth;
+        stdsize.height = stdwidth / facialImage->width * facialImage->height;
+        IplImage *stdImage = cvCreateImage(stdsize, originalImage->depth, originalImage->nChannels);
+        cvResize(facialImage, stdImage, CV_INTER_LINEAR);
 
-
-	//draw the shape
-	CvSize ssize;
-	ssize.width = 130;
-	ssize.height = 130;
-	IplImage *shapeImg = cvCreateImage(ssize, originalImage->depth, originalImage->nChannels);
-	cvSet(shapeImg, CV_RGB(0,0,0));
-	AAM_Shape temShape = Shape;
-	double orgwid = temShape.MaxX() - temShape.MinX();
-	double orghei = temShape.MaxY() - temShape.MinY();
-	for (int i = 0; i < 68; i++) {
-		temShape[i].x = (temShape[i].x - Shape.MinX()) * stdwidth / orgwid;
-		temShape[i].y = (temShape[i].y - Shape.MinY()) * stdsize.height / orghei;
-	}
-	temShape.Sketch(shapeImg);
-	cvShowImage("shape", shapeImg);
-	cvReleaseImage(&shapeImg);
+        cvNamedWindow("CurrentFacialImage");
+        cvShowImage("CurrentFacialImage", stdImage);
 
 
-	//Facial Prediction
-	FacePredict face_predict;
-	std::string mfile = resultDir + "facial.predict_model";
-	std::ifstream model(mfile.c_str());
-	face_predict.Read(model);
-	model.close();
-	//IplImage* newImage = face_predict.predict(Shape, *originalImage, ShapeF, *ImageF, ratioF, ShapeM, *ImageM, ratioM, atoi(argv[3]), atoi(argv[4]), false);
+        //draw the shape
+        CvSize ssize;
+        ssize.width = 130;
+        ssize.height = 130;
+        IplImage *shapeImg = cvCreateImage(ssize, originalImage->depth, originalImage->nChannels);
+        cvSet(shapeImg, CV_RGB(0,0,0));
+        AAM_Shape temShape = Shape;
+        double orgwid = temShape.MaxX() - temShape.MinX();
+        double orghei = temShape.MaxY() - temShape.MinY();
+        for (int i = 0; i < 68; i++) {
+            temShape[i].x = (temShape[i].x - Shape.MinX()) * stdwidth / orgwid;
+            temShape[i].y = (temShape[i].y - Shape.MinY()) * stdsize.height / orghei;
+        }
+        temShape.Sketch(shapeImg);
+        cvShowImage("shape", shapeImg);
+        cvReleaseImage(&shapeImg);
 
 
-	IplImage* newImage = face_predict.predict(Shape, *originalImage, atoi(curAge.c_str()), atoi(predictAge.c_str()), true);
-	std::string newfile = std::string(originalImageFileName);
-	newfile = newfile.insert(newfile.find_last_of('/')+1, "result_" );
-	newfile = newfile.insert(newfile.find_last_of('.'), std::string("_G" + predictAge));
-	cvSaveImage(newfile.c_str(), newImage);
+        //Facial Prediction
+        FacePredict face_predict;
+        std::string mfile = resultDir + "facial.predict_model";
+        std::ifstream model(mfile.c_str());
+        face_predict.Read(model);
+        model.close();
+        //IplImage* newImage = face_predict.predict(Shape, *originalImage, ShapeF, *ImageF, ratioF, ShapeM, *ImageM, ratioM, atoi(argv[3]), atoi(argv[4]), false);
 
-	cvNamedWindow("PredictedFacialImage");
-	cvShowImage("PredictedFacialImage", newImage);
-	cvWaitKey(0);
 
-	cvReleaseImage(&image);
+        IplImage* newImage = face_predict.predict(Shape, *originalImage, atoi(curAge), atoi(predictAge), true);
+        std::string newfile = std::string(originalImageFileName);
+        newfile = newfile.insert(newfile.find_last_of('/')+1, "result_" );
+        newfile = newfile.insert(newfile.find_last_of('.'), std::string("_G" + string(predictAge)));
+        cvSaveImage(newfile.c_str(), newImage);
 
-	return 0;
+        cvNamedWindow("PredictedFacialImage");
+        cvShowImage("PredictedFacialImage", newImage);
+        cvWaitKey(0);
+
+        cvReleaseImage(&image);
+
+        return newfile.c_str();
+    }
 }
+
+/*
+int main() {
+	char* originalImageFileName = "input.jpg";
+	char* curAge = "1";
+	char* predictAge = "3";
+
+    fit(originalImageFileName, curAge, predictAge);
+    return 0;
+}*/

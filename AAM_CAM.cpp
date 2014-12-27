@@ -1,14 +1,14 @@
 /****************************************************************************
-* 
+*
 * Copyright (c) 2008 by Yao Wei, all rights reserved.
 *
 * Author:      	Yao Wei
 * Contact:     	njustyw@gmail.com
-* 
-* This software is partly based on the following open source: 
-*  
-*		- OpenCV 
-* 
+*
+* This software is partly based on the following open source:
+*
+*		- OpenCV
+*
 ****************************************************************************/
 
 #include "AAM_CAM.h"
@@ -45,10 +45,10 @@ AAM_CAM::~AAM_CAM()
 }
 
 //============================================================================
-void AAM_CAM::Train(const std::vector<AAM_Shape>& AllShapes, 
-					const std::vector<IplImage*>& AllImages, 
-					double shape_percentage /* = 0.95 */, 
-					double texture_percentage /* = 0.95 */, 
+void AAM_CAM::Train(const std::vector<AAM_Shape>& AllShapes,
+					const std::vector<IplImage*>& AllImages,
+					double shape_percentage /* = 0.95 */,
+					double texture_percentage /* = 0.95 */,
 					double appearance_percentage /* = 0.95 */)
 {
 	if(AllShapes.size() != AllImages.size())
@@ -64,11 +64,11 @@ void AAM_CAM::Train(const std::vector<AAM_Shape>& AllShapes,
 	__Storage = cvCreateMemStorage(0);
 	__paw.Train(__shape.GetAAMReferenceShape(), __Points, __Storage);
 	__texture.Train(AllShapes, __paw, AllImages, texture_percentage, false);
-	__pq = cvCreateMat(1, __shape.nModes()+4, CV_64FC1);	
+	__pq = cvCreateMat(1, __shape.nModes()+4, CV_64FC1);
 
 	printf("################################################\n");
 	printf("Build Combined Appearance Model...\n");
-	
+
 	int nsamples = AllShapes.size();
 	int npointsby2 = __shape.nPoints()*2;
 	int npixels = __texture.nPixels();
@@ -93,7 +93,7 @@ void AAM_CAM::Train(const std::vector<AAM_Shape>& AllShapes,
 		AllShapes[i].Point2Mat(s);
 		__paw.FasterGetWarpTextureFromMatShape(s, AllImages[i], t, true);
 		__texture.AlignTextureToRef(__MeanG, t);
-		
+
 		//combine shape and texture parameters
 		CvMat OneAppearance;
 		cvGetRow(AllAppearances, &OneAppearance, i);
@@ -104,7 +104,7 @@ void AAM_CAM::Train(const std::vector<AAM_Shape>& AllShapes,
 	DoPCA(AllAppearances, appearance_percentage);
 
 	int np = __AppearanceEigenVectors->rows;
-	
+
 	printf("Extracting shape and texture part of combined eigenvectors...\n",np);
 
 	// extract the shape part of the combined eigen vectors
@@ -125,7 +125,7 @@ void AAM_CAM::Train(const std::vector<AAM_Shape>& AllShapes,
 }
 
 //============================================================================
-void AAM_CAM::ShapeTexture2Combined(const CvMat* Shape, const CvMat* Texture, 
+void AAM_CAM::ShapeTexture2Combined(const CvMat* Shape, const CvMat* Texture,
 									CvMat* Appearance)
 {
 	__shape.CalcParams(Shape, __pq);
@@ -152,7 +152,7 @@ void AAM_CAM::DoPCA(const CvMat* AllAppearances, double percentage)
     CvMat* tmpEigenVectors = cvCreateMat(nEigenAtMost, nfeatures, CV_64FC1);
     __MeanAppearance = cvCreateMat(1, nfeatures, CV_64FC1 );
 
-    cvCalcPCA(AllAppearances, __MeanAppearance, 
+    cvCalcPCA(AllAppearances, __MeanAppearance,
         tmpEigenValues, tmpEigenVectors, CV_PCA_DATA_AS_ROW);
 
 	double allSum = cvSum(tmpEigenValues).val[0];
@@ -170,7 +170,7 @@ void AAM_CAM::DoPCA(const CvMat* AllAppearances, double percentage)
 
 	__AppearanceEigenValues = cvCreateMat(1, nTruncated, CV_64FC1);
 	__AppearanceEigenVectors = cvCreateMat(nTruncated, nfeatures, CV_64FC1);
-    
+
 	CvMat G;
 	cvGetCols(tmpEigenValues, &G, 0, nTruncated);
 	cvCopy(&G, __AppearanceEigenValues);
@@ -187,7 +187,7 @@ void AAM_CAM::DoPCA(const CvMat* AllAppearances, double percentage)
 void AAM_CAM::CalcLocalShape(CvMat* s, const CvMat* c)
 {
 	cvMatMul(c, __Qs, s);
-	cvAdd(s, __MeanS, s);	
+	cvAdd(s, __MeanS, s);
 }
 
 //============================================================================
@@ -195,14 +195,14 @@ void AAM_CAM::CalcGlobalShape(CvMat* s, const CvMat* pose)
 {
 	int npoints = s->cols/2;
 	double* fasts = s->data.db;
-	double a=cvmGet(pose,0,0)+1, b=cvmGet(pose,0,1), 
+	double a=cvmGet(pose,0,0)+1, b=cvmGet(pose,0,1),
 		tx=cvmGet(pose,0,2), ty=cvmGet(pose,0,3);
 	double x, y;
 	for(int i = 0; i < npoints; i++)
 	{
 		x = fasts[2*i  ];
 		y = fasts[2*i+1];
-		
+
 		fasts[2*i  ] = a*x-b*y+tx;
 		fasts[2*i+1] = b*x+a*y+ty;
 	}
@@ -244,7 +244,7 @@ void AAM_CAM::Clamp(CvMat* c, double s_d /* = 3.0 */)
 	{
 		limit = s_d*sqrt(fastv[i]);
 		if(fastc[i] > limit) fastc[i] = limit;
-		else if(fastc[i] < -limit) fastc[i] = -limit;	
+		else if(fastc[i] < -limit) fastc[i] = -limit;
 	}
 }
 
@@ -278,12 +278,12 @@ void AAM_CAM::DrawAppearance(IplImage* image, const AAM_Shape& Shape, CvMat* Tex
 				v1 = paw.Tri(tri_idx, 0);
 				v2 = paw.Tri(tri_idx, 1);
 				v3 = paw.Tri(tri_idx, 2);
-		
-				x2 = paw.Alpha(idx1)*refShape[v1].x + paw.Belta(idx1)*refShape[v2].x +  
+
+				x2 = paw.Alpha(idx1)*refShape[v1].x + paw.Belta(idx1)*refShape[v2].x +
 					paw.Gamma(idx1)*refShape[v3].x;
-				y2 = paw.Alpha(idx1)*refShape[v1].y + paw.Belta(idx1)*refShape[v2].y +  
+				y2 = paw.Alpha(idx1)*refShape[v1].y + paw.Belta(idx1)*refShape[v2].y +
 					paw.Gamma(idx1)*refShape[v3].y;
-				
+
 				idx2 = __paw.Rect(y2, x2);
 				if(idx2 < 0) continue;
 
@@ -322,7 +322,7 @@ void AAM_CAM::Read(std::ifstream& is)
 
 	int np, nfeatures;
 	is >> np >> nfeatures >> __WeightsS2T;
-	
+
 	__MeanAppearance = cvCreateMat(1, nfeatures, CV_64FC1);
 	__AppearanceEigenValues = cvCreateMat(1, np, CV_64FC1);
 	__AppearanceEigenVectors = cvCreateMat(np, nfeatures, CV_64FC1);
@@ -330,7 +330,7 @@ void AAM_CAM::Read(std::ifstream& is)
 	__Qg = cvCreateMat(np, __texture.nPixels(), CV_64FC1);
 	__MeanS = cvCreateMat(1, __shape.nPoints()*2, CV_64FC1);
 	__MeanG = cvCreateMat(1, __texture.nPixels(), CV_64FC1);
-	
+
 	is >> __MeanAppearance;
 	is >> __AppearanceEigenValues;
 	is >> __AppearanceEigenVectors;
@@ -352,8 +352,8 @@ static const int offset = 40;
 static CvMat* c = 0;//conbined appearance parameters
 static CvMat* s = 0;//shape instance
 static CvMat* t = 0;//texture instance
-static IplImage* image = 0;		
-static AAM_Shape aam_s; 
+static IplImage* image = 0;
+static AAM_Shape aam_s;
 //============================================================================
 
 //============================================================================
@@ -378,7 +378,7 @@ void ontrackcam(int pos)
 	//generate shape and texture instance
 	g_cam->CalcLocalShape(s, c);
 	g_cam->CalcTexture(t, c);
-	
+
 	//warp texture instance from base mesh to current shape instance
 	aam_s.Mat2Point(s);
 	int w = aam_s.GetWidth(), h = aam_s.MaxY()-aam_s.MinY();
@@ -386,11 +386,11 @@ void ontrackcam(int pos)
 	if(image == 0)image = cvCreateImage(cvSize(w*2,h*2), 8, 3);
 	cvSet(image, cvScalar(128, 128, 128));
 	g_cam->DrawAppearance(image, aam_s, t);
-	
+
 	cvNamedWindow("Combined Appearance Model",1);
 	cvShowImage("Combined Appearance Model", image);
-	
-	if(cvWaitKey(10) == '27')
+
+	if(cvWaitKey(10) == 27)
 	{
 		cvReleaseImage(&image);
 		cvReleaseMat(&s);
@@ -406,7 +406,7 @@ void AAM_CAM::ShowVariation()
 {
 	printf("Show modes of appearance variations...\n");
 	cvNamedWindow("Parameters",1);
-	
+
 	//create trackbars for appearance
 	for(int i = 0; i < n; i++)
 	{
