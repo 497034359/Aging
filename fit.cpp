@@ -14,18 +14,19 @@
 #include <cstdio>
 #include <string>
 #include <opencv/highgui.h>
+#include <string.h>
 
 #include "AAM_IC.h"
 #include "AAM_Basic.h"
 #include "AAM_VJFaceDetect.h"
 #include "FacePredict.h"
+#include "AAM_Util.h"
 
 using namespace std;
 
 std::string resultDir = "./trainingSets/";
 std::string trainDir = "./trainingSets/";
 //std::string resultDir = "../test2/";
-
 
 static void usage()
 {
@@ -41,18 +42,15 @@ static void usage()
 
 extern "C"
 {
-    const char* fit(char* originalImageFileName, char* curAge, char* predictAge)
+    int fit(char* originalImageFileName, char* curAge, char* predictAge, char* ResultsSavePath)
     {
-
+        resultPath = ResultsSavePath;
         //load image
         IplImage* originalImage = cvLoadImage(originalImageFileName, 1);
         if(originalImage==0){
-            fprintf(stderr, "ERROR(%s, %d): Cannot open image file %s!\n",
-                __FILE__, __LINE__, originalImageFileName);
-            exit(0);
+            processState = 1;
+            return processState;
         }
-
-
 
         IplImage *image = cvCreateImage(cvGetSize(originalImage), originalImage->depth, originalImage->nChannels);
         cvCopy(originalImage, image);
@@ -68,8 +66,8 @@ extern "C"
         std::ifstream fs(aamFileName.c_str());
         if(fs == 0) {
             //fprintf(stderr, "ERROR(%s: %d): Cannot open file %s!\n", __FILE__, __LINE__, resultDir+"Group"+ /*std::string(argv[3])*/curAge +".aam_ic");
-            printf("error");
-            exit(0);
+            processState = 3;
+            return processState;
         }
         fs >> type;
 
@@ -87,6 +85,9 @@ extern "C"
 
         //detect face for intialization
         Shape = fjdetect.Detect(image, aam->GetMeanShape());
+        if (processState != 0) {
+            return processState;
+        }
 
         //do image alignment
         aam->Fit(image, Shape, 30, false);  //if true, show process
@@ -97,11 +98,12 @@ extern "C"
         Shape.Write( outfile );
         outfile.close();
 
-        //show GUI
-        cvNamedWindow("AAMFitting", CV_WINDOW_AUTOSIZE);
-        aam->Draw(image, 0);
-        cvShowImage("AAMFitting", image);
-        cvWaitKey(0);
+        //
+        // show face detect result
+        //cvNamedWindow("AAMFitting", CV_WINDOW_AUTOSIZE);
+        //aam->Draw(image, 0);
+        //cvShowImage("AAMFitting", image);
+        //cvWaitKey(0);
         //}
 
         /*
@@ -179,16 +181,17 @@ extern "C"
 
         cvReleaseImage(&image);
 
-        return newfile.c_str();
+        return processState;
     }
 }
 
-/*
+
 int main() {
-	char* originalImageFileName = "input.jpg";
+    char* originalImageFileName = "input.jpg";
 	char* curAge = "1";
 	char* predictAge = "3";
+	char* ResultsSavePath = "ResultsSavePath";
 
-    fit(originalImageFileName, curAge, predictAge);
+    fit(originalImageFileName, curAge, predictAge, ResultsSavePath);
     return 0;
-}*/
+}

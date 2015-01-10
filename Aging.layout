@@ -3,77 +3,97 @@
 	<ActiveTarget name="Debug" />
 	<File name="AAM_Basic.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="460" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="AAM_CAM.cpp" open="1" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="12508" topLine="392" />
-		</Cursor>
-	</File>
-	<File name="AAM_VJFaceDetect.h" open="1" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="FacePredict.cpp" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="439" topLine="0" />
+			<Cursor1 position="1046" topLine="27" />
 		</Cursor>
 	</File>
 	<File name="AAM_Util.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="543" topLine="3" />
+			<Cursor1 position="1091" topLine="39" />
 		</Cursor>
 	</File>
-	<File name="AAM_CAM.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="AAM_VJFaceDetect.cpp" open="1" top="1" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="642" topLine="33" />
+			<Cursor1 position="352" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="AAM_TDM.cpp" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="FacePredict.h" open="0" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="8568" topLine="262" />
+			<Cursor1 position="484" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="AAM_CAM.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="642" topLine="23" />
+		</Cursor>
+	</File>
+	<File name="AAM_Util.cpp" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1880" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="AAM_Shape.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="13643" topLine="554" />
 		</Cursor>
 	</File>
 	<File name="fit.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="6803" topLine="164" />
+			<Cursor1 position="1625" topLine="63" />
 		</Cursor>
 	</File>
-	<File name="AAM_Basic.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="AAM_CAM.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="870" topLine="27" />
+			<Cursor1 position="13091" topLine="386" />
 		</Cursor>
 	</File>
-	<File name="AAM_PAW.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="AAM_PAW.cpp" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4703" topLine="111" />
+			<Cursor1 position="427" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="AAM_IC.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="AAM_IC.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="408" topLine="12" />
+			<Cursor1 position="1613" topLine="43" />
 		</Cursor>
 	</File>
-	<File name="AAM_PAW.cpp" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="AAM_Shape.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="427" topLine="177" />
+			<Cursor1 position="1695" topLine="75" />
 		</Cursor>
 	</File>
-	<File name="AAM_Util.cpp" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="AAM_Config.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3394" topLine="132" />
+			<Cursor1 position="162" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="AAM_IC.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="AAM_IC.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="11390" topLine="353" />
+			<Cursor1 position="11014" topLine="334" />
 		</Cursor>
 	</File>
-	<File name="FacePredict.h" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="AAM_TDM.cpp" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="484" topLine="12" />
+			<Cursor1 position="8568" topLine="247" />
+		</Cursor>
+	</File>
+	<File name="AAM_VJFaceDetect.h" open="0" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="431" topLine="17" />
+		</Cursor>
+	</File>
+	<File name="AAM_Basic.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6749" topLine="204" />
+		</Cursor>
+	</File>
+	<File name="AAM_PAW.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4703" topLine="143" />
+		</Cursor>
+	</File>
+	<File name="FacePredict.cpp" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="439" topLine="36" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

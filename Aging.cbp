@@ -35,29 +35,32 @@
 		</Compiler>
 		<Linker>
 			<Add option="`opencv-config --ldstaticflags`" />
-			<Add library="/usr/local/lib/libopencv_calib3d.so" />
+			<Add library="/usr/local/lib/libopencv_videostab.so" />
+			<Add library="/usr/local/lib/libopencv_superres.so" />
+			<Add library="/usr/local/lib/libopencv_stitching.so" />
 			<Add library="/usr/local/lib/libopencv_contrib.so" />
-			<Add library="/usr/local/lib/libopencv_core.so" />
-			<Add library="/usr/local/lib/libopencv_features2d.so" />
-			<Add library="/usr/local/lib/libopencv_flann.so" />
+			<Add library="/usr/local/lib/libopencv_nonfree.so" />
+			<Add library="/usr/local/lib/libopencv_ocl.so" />
 			<Add library="/usr/local/lib/libopencv_gpu.so" />
+			<Add library="/usr/local/lib/libopencv_photo.so" />
+			<Add library="/usr/local/lib/libopencv_objdetect.so" />
+			<Add library="/usr/local/lib/libopencv_legacy.so" />
+			<Add library="/usr/local/lib/libopencv_video.so" />
+			<Add library="/usr/local/lib/libopencv_ml.so" />
+			<Add library="/usr/local/lib/libopencv_calib3d.so" />
+			<Add library="/usr/local/lib/libopencv_ts.a" />
+			<Add library="/usr/local/lib/libopencv_features2d.so" />
 			<Add library="/usr/local/lib/libopencv_highgui.so" />
 			<Add library="/usr/local/lib/libopencv_imgproc.so" />
-			<Add library="/usr/local/lib/libopencv_legacy.so" />
-			<Add library="/usr/local/lib/libopencv_ml.so" />
-			<Add library="/usr/local/lib/libopencv_nonfree.so" />
-			<Add library="/usr/local/lib/libopencv_objdetect.so" />
-			<Add library="/usr/local/lib/libopencv_photo.so" />
-			<Add library="/usr/local/lib/libopencv_stitching.so" />
-			<Add library="/usr/local/lib/libopencv_ts.so" />
-			<Add library="/usr/local/lib/libopencv_video.so" />
-			<Add library="/usr/local/lib/libopencv_videostab.so" />
+			<Add library="/usr/local/lib/libopencv_flann.so" />
+			<Add library="/usr/local/lib/libopencv_core.so" />
 			<Add directory="/usr/local/lib" />
 		</Linker>
 		<Unit filename="AAM_Basic.cpp" />
 		<Unit filename="AAM_Basic.h" />
 		<Unit filename="AAM_CAM.cpp" />
 		<Unit filename="AAM_CAM.h" />
+		<Unit filename="AAM_Config.h" />
 		<Unit filename="AAM_IC.cpp" />
 		<Unit filename="AAM_IC.h" />
 		<Unit filename="AAM_PAW.cpp" />
