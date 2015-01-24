@@ -55,9 +55,8 @@ AAM_Shape AAM_VJFaceDetect::Detect(const IplImage* image, const AAM_Shape& MeanS
     {
         //fprintf(stderr, "ERROR(%s, %d): Can NOT find any face!\n", __FILE__, __LINE__);
         //exit(0);
-        AAM_Shape StartShape;
-        processState = 2;
-        return StartShape;
+        AgingException agingException(2);
+        throw agingException;
     }
 
     int iSelectedFace = 0;

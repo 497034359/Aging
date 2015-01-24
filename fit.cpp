@@ -35,7 +35,7 @@ static void usage()
 		"---- string:	image file\n"
 		"---- int:		current age group\n"
 		"---- int:		predicted age group\n");
-		"Group0:[0,1), Group1:[1,2), Group2:[2,3), Group3:[3,6), Group4:[6,10), Group5:[10,18]";
+		//"Group0:[0,1), Group1:[1,2), Group2:[2,3), Group3:[3,6), Group4:[6,10), Group5:[10,18]";
 		//"Group0:[0,2), Group1:[2,4), Group2:[4,6), Group3:[6,10), Group4:[10,15), Group5:[15,20), Group6:[20, 30), Group7: [30, 40), Group8: [40, 68) ";
 	exit(0);
 }
@@ -47,9 +47,8 @@ extern "C"
         resultPath = ResultsSavePath;
         //load image
         IplImage* originalImage = cvLoadImage(originalImageFileName, 1);
-        if(originalImage==0){
-            processState = 1;
-            return processState;
+        if (originalImage == 0) {
+            return 1;
         }
 
         IplImage *image = cvCreateImage(cvGetSize(originalImage), originalImage->depth, originalImage->nChannels);
@@ -60,14 +59,13 @@ extern "C"
 
         //if (atoi(argv[1]) == 0) {
             //search shape by aam
-        AAM * aam = NULL;
+        AAM *aam = NULL;
         int type;
         std::string aamFileName = resultDir + "Group" + /*std::string(argv[3])*/curAge + ".aam_ic";
         std::ifstream fs(aamFileName.c_str());
         if(fs == 0) {
             //fprintf(stderr, "ERROR(%s: %d): Cannot open file %s!\n", __FILE__, __LINE__, resultDir+"Group"+ /*std::string(argv[3])*/curAge +".aam_ic");
-            processState = 3;
-            return processState;
+            return 3;
         }
         fs >> type;
 
@@ -95,7 +93,7 @@ extern "C"
         ofstream outfile;
         string wuxuefTmpResultDir = resultDir + "aam_result.txt";
         outfile.open(wuxuefTmpResultDir.c_str());
-        Shape.Write( outfile );
+        Shape.Write(outfile);
         outfile.close();
 
         //
@@ -192,6 +190,7 @@ int main() {
 	char* predictAge = "3";
 	char* ResultsSavePath = "ResultsSavePath";
 
-    fit(originalImageFileName, curAge, predictAge, ResultsSavePath);
+    cout << fit(originalImageFileName, curAge, predictAge, ResultsSavePath) << endl;
+    system("pause");
     return 0;
 }
